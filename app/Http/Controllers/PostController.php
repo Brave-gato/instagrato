@@ -27,7 +27,10 @@ class PostController extends Controller
     public function index()
     {
         $followedUsers = auth()->user()->following()->pluck('id');
-        $posts = Post::whereIn('user_id', $followedUsers)
+<<<<<<< Tabnine <<<<<<<
+
+        $posts = \App\Post::whereIn('user_id', $followedUsers)//+
+>>>>>>> Tabnine >>>>>>>// {"conversationId":"792e9b30-7b86-4eb3-8fbf-ee04963cafdf","source":"instruct"}
             ->orWhereHas('likes', '>', 10)
             ->latest()
             ->paginate(15);

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Post;
+
 
 class UserController extends Controller
 {
@@ -28,14 +32,15 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('profile.show', $user)->with('success', 'Profile updated successfully');
+        return redirect()->route('profile.show', $user)->with('success', 'Profile mis à');
     }
 
-    public function follow(User $user)
-    {
-        auth()->user()->following()->attach($user->id);
-        return back()->with('success', 'You are now following ' . $user->name);
-    }
+public function follow(User $user)
+{
+    auth()->user()->following()->attach($user->id);
+    return back()->with('success', 'You are now following ' . $user->name);
+}
+
 
     public function unfollow(User $user)
     {

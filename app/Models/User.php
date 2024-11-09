@@ -43,7 +43,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profilePhoto',
+        'profile_photo',
         'bio'
     ];
 
