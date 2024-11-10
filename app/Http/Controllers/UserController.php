@@ -32,20 +32,20 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('profile.show', $user)->with('success', 'Profile mis à');
+        return redirect()->route('profile.show', $user)->with('success', 'Profil mis à jour');
     }
 
-public function follow(User $user)
-{
-    auth()->user()->following()->attach($user->id);
-    return back()->with('success', 'You are now following ' . $user->name);
-}
+    public function follow(User $user)
+    {
+        auth()->user()->following()->attach($user->id);
+        return back()->with('success', 'Vous suivez ' . $user->name);
+    }
 
 
     public function unfollow(User $user)
     {
         auth()->user()->following()->detach($user->id);
-        return back()->with('success', 'You have unfollowed ' . $user->name);
+        return back()->with('success', 'Vous ne suivez plus ' . $user->name);
     }
 
 
@@ -64,5 +64,4 @@ public function follow(User $user)
         $posts = $user->posts()->latest()->paginate(12);
         return view('users.show', compact('user', 'posts'));
     }
-
 }

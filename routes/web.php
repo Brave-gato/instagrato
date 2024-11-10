@@ -3,6 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\PostController;
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', [PostController::class, 'index'])->name('home');
+
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +27,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

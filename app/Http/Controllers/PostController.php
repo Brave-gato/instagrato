@@ -2,11 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    //
+    /*Ceci signifie que l'utilisateur doit être authentifié pour accéder à toutes les autres méthodes du contrôleur, show et index. Il faut configurer l'authentification avec la commande 'composer require laravel/ui' et après 'php artisan ui vue --auth'*/
+    /*Cette méthode est appelée pour afficher la page d'accueil, qui affiche les derniers posts de tous les utilisateurs suivis par l'utilisateur connecté, ainsi que les posts avec plus de 10 likes. Les posts sont triés par date décroissante.*/
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['show', 'index']);
+    }
+
+    public function index()
+    {
+        $followedUsers = auth()->user()->following()->pluck('id');
+
+        $posts = Post::whereIn('user_id', $followedUsers)
+            ->orWhereHas('likes', function ($query) {
+                $query->havingRaw('COUNT(*) > ?', [10]);
+            })
+            ->latest()
+            ->paginate(15);
+
+        $posts = Post::with('user')->latest()->paginate(15);
+        return view('home', compact('posts'));
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -21,27 +43,10 @@ class PostController extends Controller
             'img_path' => $imagePath,
         ]);
 
-        return redirect()->route('home')->with('success', 'Post created successfully');
+        return redirect()->route('home')->with('success', 'Publication créée.');
     }
-
-    public function index()
-    {
-        $followedUsers = auth()->user()->following()->pluck('id');
-<<<<<<< Tabnine <<<<<<<
-
-        $posts = \App\Post::whereIn('user_id', $followedUsers)//+
->>>>>>> Tabnine >>>>>>>// {"conversationId":"792e9b30-7b86-4eb3-8fbf-ee04963cafdf","source":"instruct"}
-            ->orWhereHas('likes', '>', 10)
-            ->latest()
-            ->paginate(15);
-
-        return view('home', compact('posts'));
-    }
-
     public function show(Post $post)
     {
         return view('posts.show', compact('post'));
     }
-
-
 }
