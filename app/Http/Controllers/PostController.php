@@ -14,7 +14,7 @@ class PostController extends Controller
         $this->middleware('auth')->except(['show', 'index']);
     }
 
-    public function index()
+    /*public function index()
     {
         $followedUsers = auth()->user()->following()->pluck('id');
 
@@ -27,6 +27,25 @@ class PostController extends Controller
 
         $posts = Post::with('user')->latest()->paginate(15);
         return view('home', compact('posts'));
+    }*/
+
+        public function index()
+    {
+        if (auth()->check()) {
+            $followedUsers = auth()->user()->following()->get()->pluck('id');
+            $posts = Post::whereIn('user_id', $followedUsers)
+                         ->orWhere('user_id', auth()->id())
+                         ->latest()
+                         ->paginate(10);
+        } else {
+            // Si l'utilisateur n'est pas connecté, affichez peut-être les posts les plus populaires
+            $posts = Post::withCount('likes')
+                         ->orderByDesc('likes_count')
+                         ->take(10)
+                         ->get();
+        }
+
+        return view('posts.index', compact('posts'));
     }
 
     public function store(Request $request)

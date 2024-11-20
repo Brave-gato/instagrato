@@ -1,18 +1,20 @@
-
 <?php
-
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
- */
 class PostFactory extends Factory
 {
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Post::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +24,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         return [
-
-
+            'user_id' => User::inRandomOrder()->first()->id,
             'img_path' => function () {
                 $randomName = Str::uuid();
                 $imageUrl = "https://picsum.photos/1024/768.webp?random={$randomName}";
@@ -32,9 +33,8 @@ class PostFactory extends Factory
 
                 return $path;
             },
-            'caption' => fake()->bs(),
-            'createAt' => fake()->dateTimeBetween('-2 months', '+ 1 month'),
-            'user_id' => User::get()->random()->id,
+            'caption' => $this->faker->bs(),
+
         ];
     }
 }
