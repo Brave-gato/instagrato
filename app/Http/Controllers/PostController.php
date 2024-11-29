@@ -14,38 +14,22 @@ class PostController extends Controller
         $this->middleware('auth')->except(['show', 'index']);
     }
 
-    /*public function index()
-    {
-        $followedUsers = auth()->user()->following()->pluck('id');
-
-        $posts = Post::whereIn('user_id', $followedUsers)
-            ->orWhereHas('likes', function ($query) {
-                $query->havingRaw('COUNT(*) > ?', [10]);
-            })
-            ->latest()
-            ->paginate(15);
-
-        $posts = Post::with('user')->latest()->paginate(15);
-        return view('home', compact('posts'));
-    }*/
-
-        public function index()
+    public function index()
     {
         if (auth()->check()) {
-            $followedUsers = auth()->user()->following()->get()->pluck('id');
+            $followedUsers = auth()->user()->following()->pluck('id');
             $posts = Post::whereIn('user_id', $followedUsers)
-                         ->orWhere('user_id', auth()->id())
-                         ->latest()
-                         ->paginate(10);
+                ->orWhere('user_id', auth()->id())
+                ->latest()
+                ->paginate(15);
         } else {
             // Si l'utilisateur n'est pas connecté, affichez peut-être les posts les plus populaires
             $posts = Post::withCount('likes')
-                         ->orderByDesc('likes_count')
-                         ->take(10)
-                         ->get();
+                ->orderByDesc('likes_count')
+                ->paginate(15); // Utilisez paginate() au lieu de get()
         }
 
-        return view('posts.index', compact('posts'));
+        return view('home', compact('posts'));
     }
 
     public function store(Request $request)
