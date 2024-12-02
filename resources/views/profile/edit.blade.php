@@ -1,29 +1,52 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
+@section('content')
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-2xl font-bold mb-6">Editer Profile</h2>
+
+        <form action="{{ route('profile.update', $user) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PATCH')
+
+            <div class="mb-6">
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                    Prénom
+                </label>
+                <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
+                    class="w-full border border-gray-300 rounded-md p-2">
+                @error('name')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
+            <div class="mb-6">
+                <label for="bio" class="block text-sm font-medium text-gray-700 mb-2">
+                    Bio
+                </label>
+                <textarea name="bio" id="bio" rows="3" 
+                    class="w-full border border-gray-300 rounded-md p-2">{{ old('bio', $user->bio) }}</textarea>
+                @error('bio')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+            <div class="mb-6">
+                <label for="profile_photo" class="block text-sm font-medium text-gray-700 mb-2">
+                    Photo Profile 
+                </label>
+                <input type="file" name="profile_photo" id="profile_photo" accept="image/*"
+                    class="w-full border border-gray-300 rounded-md p-2">
+                @error('profile_photo')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
-        </div>
+
+            <button type="submit" 
+                class="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                Enregistrer
+            </button>
+        </form>
     </div>
-</x-app-layout>
+</div>
+@endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+// Gère les follow/unfollow functionality
 class FollowController extends Controller
 {
     public function __construct()

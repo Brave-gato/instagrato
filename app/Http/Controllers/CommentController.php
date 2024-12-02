@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
+//Gère les comments créer et effacer
 class CommentController extends Controller
 {
     public function __construct()

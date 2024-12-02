@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
+// Gère les post likes/unlikes
 class LikeController extends Controller
 {
     public function __construct()
