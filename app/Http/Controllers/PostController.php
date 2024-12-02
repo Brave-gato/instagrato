@@ -14,7 +14,7 @@ class PostController extends Controller
     {
         $this->middleware('auth');
     }
-/*
+    /*
     public function index()
     {
         $following_ids = auth()->user()->following()->pluck('users.id');
@@ -28,22 +28,19 @@ class PostController extends Controller
     }
 */
 
-        public function index()
+    public function index()
     {
-        
-            $following_ids = auth()->user()->following()->pluck('id');
-            $posts = Post::whereIn('user.id', $following_ids)
-                ->orWhereHas('likes', function ($query) {
-                    $query->where('id', '>', 0); // ou toute autre condition que vous souhaitez
-                })
-                ->with(['user', 'likes', 'comments'])
-                ->latest()
-                ->paginate(12);
 
-            return view('posts.index', compact('posts'));
-        
+        $following_ids = auth()->user()->following()->get()->pluck('id');
+        $posts = Post::whereIn('user_id', $following_ids)
+
+            ->with(['user', 'likes', 'comments'])
+            ->latest()
+            ->paginate(12);
+
+        return view('posts.index', compact('posts'));
     }
-    
+
     public function create()
     {
         return view('posts.create');
@@ -59,7 +56,7 @@ class PostController extends Controller
         $imagePath = $request->file('image')->store('uploads', 'public');
 
         // Resize image
-       // $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+        // $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
         //$image->save();
 
         auth()->user()->posts()->create([
@@ -67,9 +64,8 @@ class PostController extends Controller
             'img_path' => $imagePath,
         ]);
 
-       // return redirect()->route('profile.show', auth()->user());
-            return redirect()->route('home')->with('success', 'Publication créée.');
-
+        // return redirect()->route('profile.show', auth()->user());
+        return redirect()->route('home')->with('success', 'Publication créée.');
     }
 
     public function show(Post $post)
@@ -80,7 +76,7 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-        
+
         Storage::delete('public/' . $post->img_path);
         $post->delete();
 

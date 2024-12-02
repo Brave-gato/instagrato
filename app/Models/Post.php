@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Post extends Model
 {
@@ -25,10 +26,8 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function likes():BelongsToMany
+    public function likes()
     {
-        return $this->BelongsToMany(Like::class);
+        return $this->hasMany(Like::class);
     }
 }
-
-
