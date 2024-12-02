@@ -30,12 +30,12 @@ Route::middleware('auth')->group(function () {
     // Page d'accueil. Home feed
     Route::get('/', [PostController::class, 'index'])->name('home');
 
-
+/*
     //on peut la retirer, laissé pour test   
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    
+    */
     // Posts
     Route::prefix('posts')->group(function () {
         Route::get('/create', [PostController::class, 'create'])->name('posts.create');
