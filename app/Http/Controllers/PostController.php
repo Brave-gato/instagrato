@@ -14,11 +14,11 @@ class PostController extends Controller
     {
         $this->middleware('auth');
     }
-
+/*
     public function index()
     {
         $following_ids = auth()->user()->following()->pluck('users.id');
-        $posts = Post::whereIn('user_id', $following_ids)
+        $posts = Post::whereIn('user.id', $following_ids)
             ->orWhereHas('likes', '>', 0)
             ->with(['user', 'likes', 'comments'])
             ->latest()
@@ -26,7 +26,24 @@ class PostController extends Controller
 
         return view('posts.index', compact('posts'));
     }
+*/
 
+        public function index()
+    {
+        
+            $following_ids = auth()->user()->following()->pluck('id');
+            $posts = Post::whereIn('user.id', $following_ids)
+                ->orWhereHas('likes', function ($query) {
+                    $query->where('id', '>', 0); // ou toute autre condition que vous souhaitez
+                })
+                ->with(['user', 'likes', 'comments'])
+                ->latest()
+                ->paginate(12);
+
+            return view('posts.index', compact('posts'));
+        
+    }
+    
     public function create()
     {
         return view('posts.create');
@@ -39,18 +56,20 @@ class PostController extends Controller
             'image' => 'required|image|max:5000'
         ]);
 
-        $imagePath = $request->file('images')->store('uploads', 'public');
+        $imagePath = $request->file('image')->store('uploads', 'public');
 
         // Resize image
-        $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
-        $image->save();
+       // $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+        //$image->save();
 
         auth()->user()->posts()->create([
             'caption' => $data['caption'],
             'img_path' => $imagePath,
         ]);
 
-        return redirect()->route('profile.show', auth()->user());
+       // return redirect()->route('profile.show', auth()->user());
+            return redirect()->route('home')->with('success', 'Publication créée.');
+
     }
 
     public function show(Post $post)
