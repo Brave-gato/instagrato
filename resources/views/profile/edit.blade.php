@@ -11,7 +11,7 @@
 
             <div class="mb-6">
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                    Prénom
+                    Nom
                 </label>
                 <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
                     class="w-full border border-gray-300 rounded-md p-2">
@@ -35,7 +35,7 @@
                 <label for="profile_photo" class="block text-sm font-medium text-gray-700 mb-2">
                     Photo Profile 
                 </label>
-                <input type="file" name="profile_photo" id="profile_photo" accept="image/*"
+                <input type="file" name="profile_photo" id="profile_photo" accept="images/*"
                     class="w-full border border-gray-300 rounded-md p-2">
                 @error('profile_photo')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

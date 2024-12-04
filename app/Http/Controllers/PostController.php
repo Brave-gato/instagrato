@@ -14,19 +14,6 @@ class PostController extends Controller
     {
         $this->middleware('auth');
     }
-    /*
-    public function index()
-    {
-        $following_ids = auth()->user()->following()->pluck('users.id');
-        $posts = Post::whereIn('user.id', $following_ids)
-            ->orWhereHas('likes', '>', 0)
-            ->with(['user', 'likes', 'comments'])
-            ->latest()
-            ->paginate(12);
-
-        return view('posts.index', compact('posts'));
-    }
-*/
 
     public function index()
     {
@@ -55,9 +42,6 @@ class PostController extends Controller
 
         $imagePath = $request->file('image')->store('uploads', 'public');
 
-        // Resize image
-        // $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
-        //$image->save();
 
         auth()->user()->posts()->create([
             'caption' => $data['caption'],

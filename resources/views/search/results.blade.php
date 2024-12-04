@@ -48,6 +48,6 @@
         <div class="text-center py-8 text-gray-500">
             Aucun resultat trouvé "{{ $query }}"
         </div>
-    @endif
+    @endif-
 </div>
 @endsection
