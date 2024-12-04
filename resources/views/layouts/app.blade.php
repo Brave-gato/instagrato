@@ -36,7 +36,7 @@
                         
                         <a href="{{ route('profile.show', auth()->user()) }}" class="flex items-center">
                             <img src="{{ auth()->user()->profile_photo 
-                                ? Storage::url(auth()->user()->profile_photo) 
+                                ? '/storage/'.auth()->user()->profile_photo
                                 : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) }}" 
                                 alt="{{ auth()->user()->name }}" 
                                 class="h-8 w-8 rounded-full object-cover">

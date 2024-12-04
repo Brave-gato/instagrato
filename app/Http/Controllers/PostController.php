@@ -49,7 +49,7 @@ class PostController extends Controller
         ]);
 
         // return redirect()->route('profile.show', auth()->user());
-        return redirect()->route('home')->with('success', 'Publication créée.');
+        return redirect()->route('home')->with('succès', 'Publication créée.');
     }
 
     public function show(Post $post)

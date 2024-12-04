@@ -3,8 +3,8 @@
 <div class="bg-white border rounded-lg mb-8">
     <div class="p-4 flex items-center">
         <a href="{{ route('profile.show', $post->user) }}" class="flex items-center">
-            <img src="{{ $post->user->profile_photo 
-                ? Storage::url($post->user->profile_photo) 
+            <img src="{{$post->user->profile_photo 
+                ? '/storage/'.$post->user->profile_photo
                 : 'https://ui-avatars.com/api/?name=' . urlencode($post->user->name) }}" 
                 alt="{{ $post->user->name }}" 
                 class="h-8 w-8 rounded-full object-cover">
@@ -24,7 +24,7 @@
         @endcan
     </div>
 
-    <img src="{{ Storage::url($post->img_path) }}" alt="{{ $post->caption }}" class="w-full">
+    <img src="{{ '/storage/'.$post->img_path }}" alt="{{ $post->caption }}" class="w-full">
 
     <div class="p-4">
         <div class="flex items-center mb-4">

@@ -5,7 +5,7 @@
     <div class="bg-white rounded-lg shadow p-6 mb-8">
         <div class="flex items-center">
             <img src="{{ $user->profile_photo 
-                ? Storage::url($user->profile_photo) 
+                ? '/storage/'.$user->profile_photo
                 : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) }}" 
                 alt="{{ $user->name }}" 
                 class="w-32 h-32 rounded-full object-cover">
@@ -47,10 +47,10 @@
                         <span class="font-bold">{{ $user->posts->count() }}</span> Publications
                     </div>
                     <div>
-                        <span class="font-bold">{{ $user->followers->count() }}</span> followers
+                        <span class="font-bold">{{ $user->followers->count() }}</span> Followers
                     </div>
                     <div>
-                        <span class="font-bold">{{ $user->following->count() }}</span> following
+                        <span class="font-bold">{{ $user->following->count() }}</span> Suivi(e)s
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@
     <div class="grid grid-cols-3 gap-4">
         @foreach($posts as $post)
             <a href="{{ route('posts.show', $post) }}" class="block aspect-square">
-                <img src="{{ Storage::url($post->img_path) }}" 
+                <img src="{{ '/storage/'.$post->img_path }}" 
                     alt="{{ $post->caption }}" 
                     class="w-full h-full object-cover">
             </a>

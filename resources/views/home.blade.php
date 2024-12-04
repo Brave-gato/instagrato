@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Bienvenue à Instagrato</h1>
+        <h1></h1>
         
         @if(isset($posts) && $posts->count() > 0)
             <div class="row">

@@ -11,7 +11,7 @@
                 @foreach($users as $user)
                     <div class="p-4 flex items-center">
                         <img src="{{ $user->profile_photo 
-                            ? Storage::url($user->profile_photo) 
+                            ? '/storage/'.$user->profile_photo
                             : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) }}" 
                             alt="{{ $user->name }}" 
                             class="h-10 w-10 rounded-full object-cover">
@@ -35,7 +35,7 @@
             <div class="grid grid-cols-3 gap-4">
                 @foreach($posts as $post)
                     <a href="{{ route('posts.show', $post) }}" class="block aspect-square">
-                        <img src="{{ Storage::url($post->img_path) }}" 
+                        <img src="{{ '/storage/'.$post->img_path }}" 
                             alt="{{ $post->caption }}" 
                             class="w-full h-full object-cover">
                     </a>
