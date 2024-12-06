@@ -8,7 +8,10 @@
 </p>
 
 <p><h1>Application Instagrato</h1></p>
-<p>L'application instagrato est une version simplifiée d'Instagram</p>
+<p>Instagrato est une application web très intuitive inspirée de Instagram, conçue pour permettre aux utilisateurs de partager des photos, de suivre d'autres utilisateurs, de liker et de commenter les publications et créer de nouvelles publications. L'objectif principal est de comprendre le fonctionnement du modèle MVC avec l'utilisation du framework Laravel entre autres, la consolidation et application des concepts de la programmation orientée objet. 
+
+Laravel fourni une structure organisée et de nombreuses fonctionnalités intégrées comme le routage, l'authentification, les migrations, la mise en cache, et la gestion des données </p>
+
 <p>Travail fait par Jose Alvarez Aleman</p>
 
 ## License

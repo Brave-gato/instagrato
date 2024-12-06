@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens; // Importer le trait correctement
+use Laravel\Sanctum\HasApiTokens; // Importé le trait correctement
 
 class User extends Authenticatable
 {
@@ -14,7 +14,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
     use HasApiTokens, Notifiable;
     /**
-     * The attributes that are mass assignable.
+     * Les attributes .
      *
      * @var array<int, string>
      */
@@ -26,7 +26,7 @@ class User extends Authenticatable
         'bio',
     ];
     /**
-     * The attributes that should be hidden for serialization.
+     * Les attributes hidden.
      *
      * @var array<int, string>
      */

@@ -7,7 +7,7 @@
         <x-post-card :post="$post" />
     @empty
         <div class="text-center py-8">
-            <p class="text-gray-500">Aucune publication trouvée. No posts yet. Follow some users to see their posts here!</p>
+            <p class="text-gray-500">Aucune publication trouvée.</p>
         </div>
     @endforelse
 
